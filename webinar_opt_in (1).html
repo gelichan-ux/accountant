@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickBooks Exclusive Discount Opt-In</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 100% 60%, #00c8d7 0%, #1a47c8 35%, #000 70%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: rgba(10,10,20,0.82);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    max-width: 500px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .header {
+    padding: 32px 32px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: #2CA01C;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px; color: #fff;
+    letter-spacing: -1px;
+  }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-text span:first-child { font-size: 10px; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0.5px; }
+  .logo-text span:last-child { font-size: 15px; color: #fff; font-weight: 700; }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #1a47c8, #00c8d7);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .header h1 { font-size: 21px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 10px; }
+  .header p { font-size: 13.5px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .deadline {
+    margin-top: 14px;
+    background: rgba(0,200,215,0.1);
+    border-left: 3px solid #00c8d7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+  }
+  .deadline strong { color: #00c8d7; font-weight: 700; }
+  .body { padding: 28px 32px 32px; }
+  .field { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  input[type=text], input[type=email] {
+    width: 100%;
+    padding: 11px 14px;
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input[type=text]::placeholder, input[type=email]::placeholder { color: rgba(255,255,255,0.3); }
+  input[type=text]:focus, input[type=email]:focus {
+    border-color: #00c8d7;
+    background: rgba(0,200,215,0.08);
+  }
+  input.error { border-color: #f87171; }
+  .err-msg { color: #f87171; font-size: 12px; margin-top: 4px; display: none; }
+  .err-msg.show { display: block; }
+
+  .checkbox-group {
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .checkbox-option:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .checkbox-option:hover { background: rgba(0,200,215,0.08); }
+  .checkbox-option input[type=checkbox] {
+    accent-color: #00c8d7;
+    width: 17px; height: 17px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .checkbox-option span { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+  .consent input[type=checkbox] { margin-top: 2px; accent-color: #00c8d7; width: 15px; height: 15px; flex-shrink: 0; }
+  button {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, #1a47c8, #00c8d7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    letter-spacing: 0.2px;
+  }
+  button:hover { opacity: 0.9; }
+
+  .confirm {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 56px 32px;
+  }
+  .confirm .icon {
+    width: 64px; height: 64px;
+    background: rgba(0,200,215,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+  }
+  .confirm h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .confirm p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="formView">
+    <div class="header">
+      <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Intuit_QuickBooks_logo.svg/1200px-Intuit_QuickBooks_logo.svg.png" alt="Intuit QuickBooks" style="height:36px; filter: brightness(0) invert(1);">
+      </div>
+      <div class="tag">🎉 Webinar Exclusive</div>
+      <h1>Get a Deeper Payments Discount for Your Clients</h1>
+      <p>Fill out this form to schedule a meeting with our team or enroll your clients in a deeper payments discount. <strong style="color:#fff;">All clients you sign up by April 9th</strong> will receive access to the deeper discount rate.</p>
+      <div class="deadline">
+        <strong>⏰ By April 9th</strong> — a money expert will send you a confirmation email with the full list of your clients who have been enrolled and received the discount.
+      </div>
+    </div>
+    <div class="body">
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Jane Smith">
+        <div class="err-msg" id="nameErr">Please enter your full name.</div>
+      </div>
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="jane@company.com">
+        <div class="err-msg" id="emailErr">Please enter a valid email address.</div>
+      </div>
+      <div class="field">
+        <label for="company">Company / Organization</label>
+        <input type="text" id="company" placeholder="Acme Corp">
+        <div class="err-msg" id="companyErr">Please enter your company name.</div>
+      </div>
+      <div class="field">
+        <label for="qboa">QBOA ID</label>
+        <input type="text" id="qboa" placeholder="Enter your QBOA ID">
+        <div class="err-msg" id="qboaErr">Please enter your QBOA ID.</div>
+      </div>
+      <div class="field">
+        <label>I'd like to: <span style="font-weight:400;color:rgba(255,255,255,0.4);">(select all that apply)</span></label>
+        <div class="checkbox-group">
+          <label class="checkbox-option">
+            <input type="checkbox" id="chkMeeting">
+            <span>📅 Schedule a meeting with sales</span>
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" id="chkDiscount">
+            <span>💸 Opt into the discount for my clients</span>
+          </label>
+        </div>
+        <div class="err-msg" id="actionErr">Please select at least one option.</div>
+      </div>
+      <div class="consent" style="margin-top:4px;">
+        <input type="checkbox" id="consent">
+        <label for="consent" style="font-weight:400;">I agree to receive promotional communications about this discount offer. I can unsubscribe at any time.</label>
+      </div>
+      <button onclick="handleSubmit()">Submit →</button>
+    </div>
+  </div>
+
+  <div class="confirm" id="confirmView">
+    <div class="icon">✅</div>
+    <h2>You're opted in!</h2>
+    <p>Check your email soon — your exclusive discount details are on their way. We can't wait to work with you!</p>
+  </div>
+</div>
+
+<script>
+function handleSubmit() {
+  let valid = true;
+  const name = document.getElementById('name');
+  const email = document.getElementById('email');
+  const company = document.getElementById('company');
+  const qboa = document.getElementById('qboa');
+  const consent = document.getElementById('consent');
+  const chkMeeting = document.getElementById('chkMeeting');
+  const chkDiscount = document.getElementById('chkDiscount');
+
+  [name, email, company, qboa].forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+
+  if (!name.value.trim()) { name.classList.add('error'); document.getElementById('nameErr').classList.add('show'); valid = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.classList.add('error'); document.getElementById('emailErr').classList.add('show'); valid = false; }
+  if (!company.value.trim()) { company.classList.add('error'); document.getElementById('companyErr').classList.add('show'); valid = false; }
+  if (!qboa.value.trim()) { qboa.classList.add('error'); document.getElementById('qboaErr').classList.add('show'); valid = false; }
+  if (!chkMeeting.checked && !chkDiscount.checked) { document.getElementById('actionErr').classList.add('show'); valid = false; }
+  if (!consent.checked) { alert('Please check the consent box to continue.'); valid = false; }
+
+  if (valid) {
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('confirmView').style.display = 'flex';
+  }
+}
+</script>
+</body>
+</html>
